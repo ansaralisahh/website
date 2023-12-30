@@ -1,49 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:indiancreatorin/src/sections/services/services.dart';
+import 'package:indiancreatorin/src/sections/services_desktop.dart';
 import 'package:indiancreatorin/src/utils/constants.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
 import '../animations/entranceFader.dart';
-import '../widgets/arrowOnTop.dart';
-import 'about/about.dart';
-import 'contact/contact.dart';
-import 'home/home.dart';
-import 'navBar/navBarLogo.dart';
+import '../widgets/arrow_on_top.dart';
+import 'about_us.dart';
+import 'contact_page.dart';
+import 'home_page.dart';
+import 'nav_bar_logo.dart';
 
 class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
   @override
-  _MainPageState createState() => _MainPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
-  ScrollController _scrollController =
+  final ScrollController _scrollController =
       ScrollController(initialScrollOffset: 25.0);
-  ItemScrollController _itemScrollController = ItemScrollController();
-  ItemPositionsListener _itemPositionListener =
+  final ItemScrollController _itemScrollController = ItemScrollController();
+  final ItemPositionsListener _itemPositionListener =
       ItemPositionsListener.create();
 
   final List<String> _sectionsName = [
     "Home",
     "Our Services",
     "About",
-    "Contact",
-    "Contact Us"
+    "Contact"
   ];
 
   void _scroll(int i) {
     _itemScrollController.scrollTo(
-        index: i, duration: Duration(seconds: 1));
+        index: i, duration: const Duration(seconds: 1));
   }
 
   Widget sectionWidget(int i) {
     if (i == 0) {
       return HomePage();
     } else if (i == 1) {
-      return Services();
+      return ServiceDesktop();
     } else if (i == 2) {
-      return About();
+      return AboutUs();
     } else if (i == 3) {
-      return Contact();
+      return ContactPage();
     } else if (i == 4) {
       return Container(
         color: Colors.white,
@@ -60,6 +61,8 @@ class _MainPageState extends State<MainPage> {
     }
   }
 
+  bool isHovering = false;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,8 +78,7 @@ class _MainPageState extends State<MainPage> {
               backgroundColor: Colors.transparent,
               elevation: 0.0,
             ),
-      drawer:
-          MediaQuery.of(context).size.width < 760 ? _appBarMobile() : null,
+      drawer: MediaQuery.of(context).size.width < 760 ? _appBarMobile() : null,
       body: SizedBox(
         height: MediaQuery.of(context).size.height,
         width: MediaQuery.of(context).size.width,
@@ -97,20 +99,16 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget _appBarActions(String childText, int index) {
+  Widget _appBarActions(String childText, int index, bool isHovering) {
     return EntranceFader(
-      offset: Offset(0, -20),
-      delay: Duration(seconds: 3),
-      duration: Duration(seconds: 1),
+      offset: const Offset(0, -20),
+      delay: const Duration(seconds: 1),
+      duration: const Duration(seconds: 1),
       child: Padding(
         padding: const EdgeInsets.all(8.0),
-        child: MaterialButton(
-          hoverColor: kPrimaryColor,
+        child: HoverColorChangeButton(
+          childText: childText,
           onPressed: () => _scroll(index),
-          child: Text(
-            childText,
-            style: TextStyle(color: Colors.black),
-          ),
         ),
       ),
     );
@@ -122,9 +120,9 @@ class _MainPageState extends State<MainPage> {
       backgroundColor: Colors.transparent,
       title: MediaQuery.of(context).size.width < 740
           ? EntranceFader(
-              duration: Duration(seconds: 1),
-              offset: Offset(0, -20),
-              delay: Duration(seconds: 3),
+              duration: const Duration(seconds: 1),
+              offset: const Offset(0, -20),
+              delay: const Duration(seconds: 3),
               child: NavBarLogo())
           : EntranceFader(
               offset: const Offset(0, -20),
@@ -136,12 +134,62 @@ class _MainPageState extends State<MainPage> {
             ),
       actions: [
         for (int i = 0; i < _sectionsName.length; i++)
-          _appBarActions(_sectionsName[i], i),
+          _appBarActions(_sectionsName[i], i, isHovering),
       ],
     );
   }
 
   Widget _appBarMobile() {
-    return Drawer();
+    return const Drawer();
+  }
+}
+
+class HoverColorChangeButton extends StatefulWidget {
+  final String childText;
+  final VoidCallback onPressed;
+
+  HoverColorChangeButton({required this.childText, required this.onPressed});
+
+  @override
+  _HoverColorChangeButtonState createState() => _HoverColorChangeButtonState();
+}
+
+class _HoverColorChangeButtonState extends State<HoverColorChangeButton> {
+  bool isHovered = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return MouseRegion(
+      onEnter: (event) {
+        setState(() {
+          isHovered = true;
+        });
+      },
+      onExit: (event) {
+        setState(() {
+          isHovered = false;
+        });
+      },
+      child: ElevatedButton(
+        style: ButtonStyle(
+          elevation: const MaterialStatePropertyAll(0.0),
+          backgroundColor: MaterialStateProperty.resolveWith<Color>(
+            (Set<MaterialState> states) {
+              if (states.contains(MaterialState.hovered)) {
+                return kPrimaryColor; // Color when hovered
+              }
+              return Colors.white;
+            },
+          ),
+        ),
+        onPressed: widget.onPressed,
+        child: Text(
+          widget.childText,
+          style: TextStyle(
+            color: isHovered ? Colors.white : Colors.black,
+          ),
+        ),
+      ),
+    );
   }
 }

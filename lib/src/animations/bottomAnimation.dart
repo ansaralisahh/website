@@ -22,9 +22,9 @@ class _AnimatorState extends State<Animator>
   void initState() {
     super.initState();
     animationController =
-        AnimationController(duration: Duration(seconds: 1), vsync: this);
-    animation = CurvedAnimation(
-        parent: animationController, curve: Curves.easeInOut);
+        AnimationController(duration: const Duration(seconds: 1), vsync: this);
+    animation =
+        CurvedAnimation(parent: animationController, curve: Curves.easeInOut);
     timer = Timer(widget.time, animationController.forward);
   }
 
@@ -44,8 +44,8 @@ class _AnimatorState extends State<Animator>
         return Opacity(
           opacity: animation.value,
           child: Transform.translate(
-            offset: Offset(0.0,
-                double.parse((-50 + animation.value * 50).toString())),
+            offset: Offset(
+                0.0, double.parse((-50 + animation.value * 50).toString())),
             child: child,
           ),
         );
@@ -55,15 +55,15 @@ class _AnimatorState extends State<Animator>
 }
 
 Timer? timer;
-Duration duration = Duration();
+Duration duration = const Duration();
 
 wait() {
   if (timer == null || !timer!.isActive) {
-    timer = Timer(Duration(microseconds: 120), () {
-      duration = Duration();
+    timer = Timer(const Duration(microseconds: 120), () {
+      duration = const Duration();
     });
   }
-  duration += Duration(milliseconds: 300);
+  duration += const Duration(milliseconds: 300);
   return duration;
 }
 

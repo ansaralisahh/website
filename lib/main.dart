@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:indiancreatorin/src/sections/mainSection.dart';
+import 'package:indiancreatorin/src/sections/main_section.dart';
 import 'package:indiancreatorin/src/utils/constants.dart';
 import 'package:url_strategy/url_strategy.dart';
 

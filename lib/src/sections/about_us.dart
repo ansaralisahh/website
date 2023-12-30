@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-class AboutTab extends StatelessWidget {
+class AboutUs extends StatelessWidget {
   final _communityLogoHeight = [50.0, 70.0, 30.0];
+
+  AboutUs({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,12 +19,15 @@ class AboutTab extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
+          SizedBox(height: 30,),
           Text(
             "About",
-            style: TextStyle(fontSize: height * 0.06, color: Colors.black),
-          ),
-          SizedBox(
-            height: height * 0.05,
+            style: GoogleFonts.montserrat(
+              fontSize: height * 0.035,
+              color: Colors.black,
+              fontWeight: FontWeight.bold,
+              letterSpacing: 1.0,
+            ),
           ),
         ],
       ),

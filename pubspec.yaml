@@ -3,7 +3,7 @@ description: A new Flutter project.
 publish_to: 'none'
 version: 1.0.0+1
 environment:
-  sdk: '>=3.0.0-322.0.dev <4.0.0'
+  sdk: '>=3.1.3 <4.0.0'
 
 dependencies:
   flutter:
@@ -14,10 +14,10 @@ dependencies:
   scrollable_positioned_list: ^0.3.5
   google_fonts: ^4.0.3
   url_launcher: ^6.1.10
-  responsive_builder: ^0.6.4
+  responsive_builder: ^0.7.0
   animated_text_kit: ^4.2.2
   carousel_slider: ^4.2.1
-  webview_flutter: ^4.0.7
+  webview_flutter: ^4.4.2
   url_strategy: ^0.2.0
 
 dev_dependencies:

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class ContactDesktop extends StatelessWidget {
-  const ContactDesktop({super.key});
+class ContactPage extends StatelessWidget {
+  const ContactPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -24,13 +24,6 @@ class ContactDesktop extends StatelessWidget {
           ),
           const SizedBox(
             height: 15,
-          ),
-          Text(
-            "Contact Us",
-            style: TextStyle(
-                fontSize: height * 0.05,
-                letterSpacing: 1.0,
-                color: Colors.black),
           ),
         ],
       ),
